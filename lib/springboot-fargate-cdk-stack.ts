@@ -11,14 +11,15 @@ export class SpringbootFargateCdkStack extends cdk.Stack {
     // Our VPC
     const vpc = new ec2.Vpc(this, "springboot-vpc", {
       maxAzs: 2,
-      natGateways: 1
+      natGateways: 1,
+      cidr: "10.0.0.0/16"
     })
     //Our ECS Fargate Cluster in this VPC
     const springbootEcsCluster = new ecs.Cluster(this, "springboot-ecs", {
       vpc,
       clusterName: "springbootCluster"
     })
-    //Our Database
+    // //Our Database
     const mySQLPassword = new secretsmanager.Secret(this, 'DBSecret', {
       secretName: "SpringbootDB-DBPassword",
       generateSecretString: {
@@ -56,7 +57,7 @@ export class SpringbootFargateCdkStack extends cdk.Stack {
         maxCapacity: 2
       }
     })
-    //Our application in AWS Fargate + ALB
+    // //Our application in AWS Fargate + ALB
     const springbootApp = new ecs_patterns.ApplicationLoadBalancedFargateService(this, 'springboot app svc', {
       cluster: springbootEcsCluster,
       desiredCount: 1,
