@@ -9,7 +9,7 @@ RUN mvn package -DskipTests
 RUN mkdir -p target/dependency && (cd target/dependency; jar -xf ../*.jar)
 
 # Step : Package image
-FROM openjdk:8-jre-alpine
+FROM openjdk:16-ea-23-jdk-oracle
 # COPY --from=build /build/target/jpademo-*.jar /app/app.jar
 # ENTRYPOINT ["java","-noverify","-XX:TieredStopAtLevel=1","-jar", "/app/app.jar"]
 
